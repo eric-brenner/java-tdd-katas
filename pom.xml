@@ -9,6 +9,7 @@
 	<description>TDD Katas</description>
 	<modules>
 		<module>fizzbuzz</module>
+		<module>game-of-life</module>
 	</modules>
 	<name>TDD Katas</name>
 
