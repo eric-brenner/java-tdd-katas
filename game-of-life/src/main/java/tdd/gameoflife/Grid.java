@@ -2,14 +2,16 @@ package tdd.gameoflife;
 
 public class Grid {
 
-	public final int n;
-	public final int m;
+	public final int width;
+	public final int height;
 	private boolean[][] cells;
+	
+	private Grid nextGeneration;
 
-	public Grid(int n, int m) {
-		this.n = n;
-		this.m = m;
-		this.cells = new boolean[n][m];
+	public Grid(int width, int height) {
+		this.width = width;
+		this.height = height;
+		this.cells = new boolean[width][height];
 	}
 
 	public boolean isCellAliveAt(int x, int y) {
@@ -18,28 +20,41 @@ public class Grid {
 		}
 		return this.cells[x][y];
 	}
+	
+	private boolean isCellDeadAt(int x, int y) {
+		return this.cells[x][y] == false;
+	}
 
 	public void addLivingCell(int x, int y) {
 		this.cells[x][y] = true;
 	}
 
 	public Grid nextGeneration() {
-		Grid nextGeneration = new Grid(n, m);
-		calculateNextCellStates(nextGeneration);
+		this.nextGeneration = new Grid(width, height);
+		calculateNextCellStates();
 		return nextGeneration;
 	}
 
-	private void calculateNextCellStates(Grid nextGeneration) {
-		for (int x = 0; x < n; x++) {
-			for (int y = 0; y < m; y++) {
-				calculateNextCellState(nextGeneration, x, y);
+	private void calculateNextCellStates() {
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				calculateNextCellState(x, y);
 			}
 		}
 	}
 
-	private void calculateNextCellState(Grid nextGeneration, int x, int y) {
+	private void calculateNextCellState(int x, int y) {
 		int numberOfNeighbors = countNumberOfNeighbors(x, y);
-		if (numberOfNeighbors == 2 || numberOfNeighbors == 3) {
+		if (isCellDeadAt(x, y)) {
+			calculateNextStateForDeadCell(x, y, numberOfNeighbors);
+		}
+		else if (numberOfNeighbors == 2 || numberOfNeighbors == 3) {
+			nextGeneration.addLivingCell(x, y);
+		}
+	}
+
+	private void calculateNextStateForDeadCell(int x, int y, int numberOfNeighbors) {
+		if (numberOfNeighbors == 3) {
 			nextGeneration.addLivingCell(x, y);
 		}
 	}
@@ -69,10 +84,14 @@ public class Grid {
 	}
 	
 	private boolean outOfBounds(int x, int y) {
-		return (x < 0 || x > n-1 || y < 0 || y > m-1);
+		return (x < 0 || x > width-1 || y < 0 || y > height-1);
 	}
 	
 	private int countNeighbor(int x, int y) {
 		return isCellAliveAt(x, y) ? 1 : 0;
+	}
+	
+	public boolean[][] getCells() {
+		return cells;
 	}
 }
