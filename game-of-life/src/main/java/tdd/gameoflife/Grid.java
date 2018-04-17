@@ -5,7 +5,7 @@ public class Grid {
 	public final int width;
 	public final int height;
 	private boolean[][] cells;
-	
+
 	private Grid nextGeneration;
 
 	public Grid(int width, int height) {
@@ -20,7 +20,7 @@ public class Grid {
 		}
 		return this.cells[x][y];
 	}
-	
+
 	private boolean isCellDeadAt(int x, int y) {
 		return this.cells[x][y] == false;
 	}
@@ -47,10 +47,14 @@ public class Grid {
 		int numberOfNeighbors = countNumberOfNeighbors(x, y);
 		if (isCellDeadAt(x, y)) {
 			calculateNextStateForDeadCell(x, y, numberOfNeighbors);
-		}
-		else if (numberOfNeighbors == 2 || numberOfNeighbors == 3) {
+		} 
+		else if (cellStaysAlive(numberOfNeighbors)) {
 			nextGeneration.addLivingCell(x, y);
 		}
+	}
+
+	private boolean cellStaysAlive(int numberOfNeighbors) {
+		return numberOfNeighbors == 2 || numberOfNeighbors == 3;
 	}
 
 	private void calculateNextStateForDeadCell(int x, int y, int numberOfNeighbors) {
@@ -60,37 +64,34 @@ public class Grid {
 	}
 
 	private int countNumberOfNeighbors(int x, int y) {
-		int numberOfNeighbors = countLeftNeighbors(x, y);
-		numberOfNeighbors += countRightNeighbors(x, y);
-		numberOfNeighbors += countNorthAndSouthNeighbors(x, y);
-		return numberOfNeighbors;
+		return countLeftNeighbors(x, y) + countRightNeighbors(x, y) + countNeighborsAboveAndBelow(x, y);
 	}
 
 	private int countLeftNeighbors(int x, int y) {
-		int count = countNeighbor(x-1, y-1);
-		count += countNeighbor(x-1, y);
-		return count += countNeighbor(x-1, y+1);
+		int count = countNeighbor(x - 1, y - 1);
+		count += countNeighbor(x - 1, y);
+		return count += countNeighbor(x - 1, y + 1);
 	}
-	
+
 	private int countRightNeighbors(int x, int y) {
-		int count = countNeighbor(x+1, y-1);
-		count += countNeighbor(x+1, y);
-		return count += countNeighbor(x+1, y+1);
+		int count = countNeighbor(x + 1, y - 1);
+		count += countNeighbor(x + 1, y);
+		return count += countNeighbor(x + 1, y + 1);
 	}
-	
-	private int countNorthAndSouthNeighbors(int x, int y) {
-		int count = countNeighbor(x, y+1);
-		return count += countNeighbor(x, y-1);
+
+	private int countNeighborsAboveAndBelow(int x, int y) {
+		int count = countNeighbor(x, y + 1);
+		return count += countNeighbor(x, y - 1);
 	}
-	
+
 	private boolean outOfBounds(int x, int y) {
-		return (x < 0 || x > width-1 || y < 0 || y > height-1);
+		return (x < 0 || y < 0 || x >= width || y >= height);
 	}
-	
+
 	private int countNeighbor(int x, int y) {
 		return isCellAliveAt(x, y) ? 1 : 0;
 	}
-	
+
 	public boolean[][] getCells() {
 		return cells;
 	}

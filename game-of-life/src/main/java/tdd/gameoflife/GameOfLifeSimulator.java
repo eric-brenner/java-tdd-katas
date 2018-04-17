@@ -20,13 +20,13 @@ public class GameOfLifeSimulator {
 	
 	public static void main(String[] args) {
 		Grid grid = new Grid(10, 10);
-		grid.addLivingCell(0, 0);
-		grid.addLivingCell(0, 1);
-		grid.addLivingCell(0, 2);
-		grid.addLivingCell(1, 0);
-		grid.addLivingCell(1, 1);
-		grid.addLivingCell(2, 2);
+		grid.addLivingCell(3, 2);
 		grid.addLivingCell(3, 3);
+		grid.addLivingCell(3, 4);
+		grid.addLivingCell(4, 2);
+		grid.addLivingCell(4, 3);
+		grid.addLivingCell(5, 4);
+		grid.addLivingCell(6, 5);
 		
 		GameOfLifeSimulator simulator = new GameOfLifeSimulator(grid, new GridPrinter());
 		simulator.run(6);
