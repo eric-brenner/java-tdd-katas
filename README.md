@@ -1,6 +1,6 @@
 # tdd-katas-java
 
-### This repository contains various Test-driven Development Katas written in Java.  
+### This repository contains various Test-driven Development Katas written in Java.    
 
 The implementation of the unit tests demonstrate the following quality characteristics:
 
@@ -9,4 +9,4 @@ The implementation of the unit tests demonstrate the following quality character
 3. Repeatable
 4. Fast
 
-The unit tests are authored with the "Arrange-Act-ssert" pattern.
+"Arrange-Act-Assert" is the pattern used to structure the unit test code.
