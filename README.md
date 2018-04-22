@@ -2,9 +2,11 @@
 
 ### This repository contains various Test-driven Development Katas written in Java.  
 
-The unit tests were authored in such a way to demonstrate the following characteristics:
+The implementation of the unit tests demonstrate the following quality characteristics:
 
-* Readable
-* Independent
-* Repeatable
-* Fast
+1. Readable
+2. Independent
+3. Repeatable
+4. Fast
+
+The unit tests are authored with the "Arrange-Act-ssert" pattern.
